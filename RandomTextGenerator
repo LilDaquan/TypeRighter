@@ -1,0 +1,47 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class RandomTextGenerator {
+
+    public void generateText(int k, int length, String filename, String result) throws FileNotFoundException {
+        if (k < 0 || length < 0) {
+            throw new IllegalArgumentException("k or length less than 0");
+        }
+        String content = new Scanner(new File(filename)).useDelimiter("\\Z").next();
+        if (k >= content.length()) {
+            throw new IllegalArgumentException("k >= length of file");
+        }
+
+        PrintStream output = new PrintStream(new File(result));
+
+        String seed;
+        //find initial seed and add it to output
+        int start = (int) (Math.random() * (content.length() - length));
+        seed = content.substring(start, start + length);
+        output.print(seed);
+
+        //loop to actually add em to output
+        for (int i = 0; i < k; i++) {
+            String toAdd = findAndAdd(content, seed);
+            output.print(toAdd);
+            seed = seed.substring(1) + toAdd;
+        }
+
+    }
+
+    //find each index and add to an ArrayList, returns one at random
+    private String findAndAdd(String content, String seed) {
+
+        //usaing contains to check, then indexOf( str, but after an int), add indexOf(i) to arraylist and update it
+        return seed;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println("Whatchu want?");
+
+
+    }
+}
